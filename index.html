@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Amos's MBA Ideas — Help Me Pick</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1A3A5C;
+    --orange: #C45C1A;
+    --dark:   #0D1B2A;
+    --white:  #FFFFFF;
+    --cream:  #F5F1EB;
+    --muted:  #7A8A9A;
+    --border: rgba(255,255,255,0.1);
+  }
+
+  html, body {
+    height: 100%; width: 100%;
+    overflow: hidden;
+    background: var(--dark);
+    font-family: 'Barlow', sans-serif;
+    color: var(--white);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+  .screen.active {
+    opacity: 1; pointer-events: all;
+  }
+
+  /* ── GRID BG ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(26,58,92,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,58,92,0.18) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── PASSWORD SCREEN ── */
+  #screen-password {
+    background: var(--dark);
+    z-index: 10;
+  }
+  .pw-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    color: var(--orange); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 48px;
+    text-align: center;
+  }
+  .pw-logo span { color: rgba(255,255,255,0.5); }
+  .pw-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px; font-weight: 700;
+    text-align: center; margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .pw-sub {
+    font-size: 14px; color: var(--muted);
+    text-align: center; margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .pw-field {
+    width: 100%; max-width: 320px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 16px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px; color: var(--white);
+    text-align: center; letter-spacing: 4px;
+    outline: none; margin-bottom: 16px;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .pw-field:focus { border-color: var(--orange); }
+  .pw-field.error { border-color: #e05555; animation: shake 0.4s ease; }
+  .pw-error {
+    font-size: 12px; color: #e05555;
+    text-align: center; margin-bottom: 16px;
+    height: 16px; transition: opacity 0.2s;
+  }
+  .btn-primary {
+    background: var(--orange); color: var(--white);
+    border: none; border-radius: 12px;
+    padding: 16px 40px; font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+    width: 100%; max-width: 320px;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* ── INTRO SCREEN ── */
+  #screen-intro {
+    text-align: center;
+    background: var(--dark);
+    padding: 32px 28px;
+  }
+  .intro-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 4px;
+    color: var(--orange); text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .intro-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(38px, 10vw, 60px);
+    font-weight: 900; line-height: 1;
+    margin-bottom: 20px; letter-spacing: -0.5px;
+  }
+  .intro-title em { color: var(--orange); font-style: normal; }
+  .intro-body {
+    font-size: 15px; line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    max-width: 360px; margin: 0 auto 28px;
+    font-weight: 300;
+  }
+  .intro-rules {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 10px; padding: 16px 20px;
+    text-align: left; max-width: 360px;
+    margin: 0 auto 32px;
+  }
+  .intro-rule {
+    font-size: 13px; color: rgba(255,255,255,0.65);
+    line-height: 1.6; margin-bottom: 6px;
+  }
+  .intro-rule:last-child { margin-bottom: 0; }
+  .intro-rule strong { color: var(--orange); }
+
+  /* ── CARD SCREEN ── */
+  #screen-cards {
+    padding: 0;
+    justify-content: flex-start;
+    background: var(--dark);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; background: rgba(255,255,255,0.08);
+    z-index: 20;
+  }
+  .progress-fill {
+    height: 100%; background: var(--orange);
+    transition: width 0.4s ease;
+  }
+
+  /* Top nav */
+  .card-nav {
+    position: fixed; top: 3px; left: 0; right: 0;
+    height: 52px; display: flex;
+    align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(13,27,42,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 19; border-bottom: 1px solid var(--border);
+  }
+  .nav-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 2px;
+  }
+  .nav-picks {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--orange); letter-spacing: 1px;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  /* Card container */
+  .card-container {
+    position: fixed; inset: 55px 0 80px;
+    overflow: hidden;
+  }
+
+  /* Individual card */
+  .idea-card {
+    position: absolute; inset: 12px 16px;
+    background: var(--white);
+    border-radius: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(100%);
+    transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .idea-card.current  { transform: translateX(0); }
+  .idea-card.prev     { transform: translateX(-110%); }
+  .idea-card.next     { transform: translateX(110%); }
+
+  /* Card hero */
+  .card-hero {
+    padding: 28px 24px 20px;
+    position: relative; flex-shrink: 0;
+  }
+  .card-emoji {
+    font-size: 40px; margin-bottom: 14px;
+    display: block; line-height: 1;
+  }
+  .card-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 8px;
+    opacity: 0.55;
+  }
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px; font-weight: 900;
+    line-height: 1.05; letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  .card-subtitle {
+    font-size: 13px; opacity: 0.55;
+    font-weight: 500; text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Accent bar */
+  .card-accent {
+    height: 4px; width: 100%; flex-shrink: 0;
+  }
+
+  /* Card body */
+  .card-body {
+    padding: 20px 24px 100px;
+    flex: 1;
+  }
+  .card-section { margin-bottom: 20px; }
+  .card-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .card-section-text {
+    font-size: 14px; line-height: 1.65;
+    color: #1a1a2a; font-weight: 400;
+  }
+  .card-section-text strong { color: var(--navy); }
+
+  /* Effort dots */
+  .effort-dots { display: flex; gap: 6px; margin-top: 4px; }
+  .effort-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #ddd;
+  }
+  .effort-dot.filled { background: var(--navy); }
+
+  /* Tags */
+  .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; padding: 4px 10px;
+    border-radius: 20px; border: 1px solid currentColor;
+    letter-spacing: 0.5px;
+  }
+
+  /* Bottom actions */
+  .card-actions {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 80px; padding: 12px 20px;
+    background: rgba(13,27,42,0.97);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 12px;
+    z-index: 20;
+  }
+  .btn-nav {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 50%; color: var(--white);
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .btn-nav:active { transform: scale(0.92); background: rgba(255,255,255,0.12); }
+  .btn-nav:disabled { opacity: 0.3; }
+  .btn-like {
+    flex: 1; height: 48px;
+    border: 2px solid var(--orange);
+    background: transparent; border-radius: 24px;
+    color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px;
+  }
+  .btn-like.selected {
+    background: var(--orange); color: var(--white);
+  }
+  .btn-like.maxed {
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.3); cursor: not-allowed;
+  }
+  .btn-like:active:not(.maxed) { transform: scale(0.97); }
+
+  /* ── REVIEW SCREEN ── */
+  #screen-review {
+    background: var(--dark);
+    padding: 24px 20px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    align-items: stretch;
+  }
+  .review-header {
+    text-align: center; padding: 20px 0 28px;
+  }
+  .review-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .review-title em { color: var(--orange); font-style: normal; }
+  .review-sub {
+    font-size: 14px; color: var(--muted); line-height: 1.6;
+  }
+  .review-picks { margin-bottom: 24px; }
+  .review-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+    margin-bottom: 12px; display: flex;
+    align-items: flex-start; gap: 16px;
+  }
+  .review-card-emoji { font-size: 28px; flex-shrink: 0; }
+  .review-card-info { flex: 1; }
+  .review-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .review-card-sub { font-size: 12px; color: var(--muted); }
+  .review-empty {
+    background: rgba(255,255,255,0.02);
+    border: 1.5px dashed rgba(255,255,255,0.15);
+    border-radius: 14px; padding: 20px;
+    text-align: center; color: var(--muted);
+    font-size: 13px; margin-bottom: 12px;
+  }
+  .comment-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--orange); text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .comment-box {
+    width: 100%; background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 14px 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px; color: var(--white);
+    resize: none; outline: none; min-height: 100px;
+    line-height: 1.6; margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .comment-box:focus { border-color: var(--orange); }
+  .comment-box::placeholder { color: rgba(255,255,255,0.25); }
+  .review-back {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); border-radius: 12px;
+    padding: 14px; font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 600; letter-spacing: 1px;
+    cursor: pointer; width: 100%; margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .review-back:active { background: rgba(255,255,255,0.05); }
+
+  /* ── THANK YOU SCREEN ── */
+  #screen-thanks {
+    text-align: center;
+    background: var(--dark);
+  }
+  .thanks-icon { font-size: 56px; margin-bottom: 20px; }
+  .thanks-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px; font-weight: 900;
+    margin-bottom: 12px; line-height: 1;
+  }
+  .thanks-title em { color: var(--orange); font-style: normal; }
+  .thanks-body {
+    font-size: 15px; color: var(--muted);
+    line-height: 1.7; max-width: 320px;
+    margin: 0 auto 32px; font-weight: 300;
+  }
+  .thanks-picks {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    max-width: 340px; width: 100%;
+    margin: 0 auto 28px; text-align: left;
+  }
+  .thanks-pick {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .thanks-pick:last-child { border-bottom: none; }
+  .thanks-pick-emoji { font-size: 22px; }
+  .thanks-pick-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 700;
+  }
+  .thanks-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--orange);
+    letter-spacing: 2px; text-align: center;
+  }
+
+  /* Animations */
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+  @keyframes heartPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.4); }
+    100% { transform: scale(1); }
+  }
+  .heart-pop { animation: heartPop 0.35s cubic-bezier(.36,.07,.19,.97); }
+
+  /* Swipe hint */
+  .swipe-hint {
+    position: fixed; bottom: 92px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.25);
+    letter-spacing: 2px; text-align: center;
+    z-index: 18; pointer-events: none;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD -->
+<div id="screen-password" class="screen active">
+  <div class="pw-logo">[ </> <span>Amos Ndip</span> ]</div>
+  <h1 class="pw-title">Private Access Only</h1>
+  <p class="pw-sub">Amos shared this link with you personally.<br>Enter the password to continue.</p>
+  <input id="pw-input" class="pw-field" type="password" placeholder="••••••" maxlength="12" autocomplete="off">
+  <div id="pw-error" class="pw-error"></div>
+  <button class="btn-primary" onclick="checkPassword()">Enter</button>
+</div>
+
+<!-- INTRO -->
+<div id="screen-intro" class="screen">
+  <p class="intro-eyebrow">MBA Capstone · Idea Selection</p>
+  <h1 class="intro-title">I need your<br><em>honest take.</em></h1>
+  <p class="intro-body">
+    I'm an MBA student at Eastern University working on my capstone project — a full business plan or white paper. I have seven ideas and I need my support team to help me narrow it down.
+  </p>
+  <div class="intro-rules">
+    <p class="intro-rule">📖 You'll review <strong>7 ideas</strong>, one at a time</p>
+    <p class="intro-rule">❤️ Pick your <strong>top 2 favorites</strong></p>
+    <p class="intro-rule">💬 Leave a <strong>quick comment</strong> at the end</p>
+    <p class="intro-rule">🎯 Most important: be <strong>honest</strong>, not kind</p>
+  </div>
+  <button class="btn-primary" onclick="startCards()">Let's Go →</button>
+</div>
+
+<!-- CARDS -->
+<div id="screen-cards" class="screen">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="card-nav">
+    <span class="nav-count" id="nav-count">1 / 7</span>
+    <span class="nav-logo">MBA Ideas</span>
+    <span class="nav-picks" id="nav-picks">0 of 2 picked</span>
+  </div>
+  <div class="card-container" id="card-container"></div>
+  <div class="swipe-hint" id="swipe-hint">← swipe or use arrows →</div>
+  <div class="card-actions">
+    <button class="btn-nav" id="btn-prev" onclick="navigate(-1)" disabled>←</button>
+    <button class="btn-like" id="btn-like" onclick="toggleLike()">
+      <span id="like-heart">♡</span>
+      <span id="like-label">Pick This</span>
+    </button>
+    <button class="btn-nav" id="btn-next" onclick="navigate(1)">→</button>
+  </div>
+</div>
+
+<!-- REVIEW -->
+<div id="screen-review" class="screen">
+  <div class="review-header">
+    <h2 class="review-title">Your <em>top picks</em></h2>
+    <p class="review-sub">Review your selections and leave Amos a note before submitting.</p>
+  </div>
+  <div class="review-picks" id="review-picks"></div>
+  <div class="comment-label">Your honest feedback</div>
+  <textarea class="comment-box" id="comment-box" placeholder="Why those two? What excites you most? What concerns you? Be real…"></textarea>
+  <button class="btn-primary" onclick="submitVote()" style="margin-bottom:12px;">Submit My Vote ✓</button>
+  <button class="review-back" onclick="goBack()">← Go back and change selections</button>
+</div>
+
+<!-- THANKS -->
+<div id="screen-thanks" class="screen">
+  <div class="thanks-icon">🙏🏾</div>
+  <h2 class="thanks-title">You're the <em>best.</em></h2>
+  <p class="thanks-body">Your picks and feedback have been noted. Amos will reach out — probably over a good meal or a cup of something warm.</p>
+  <div class="thanks-picks" id="thanks-picks"></div>
+  <p class="thanks-tagline">— Amos Ndip, MBA Candidate</p>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const ideas = [
+  {
+    id: 1,
+    emoji: "🍖",
+    title: "Suya Kitchen",
+    subtitle: "West African Restaurant",
+    color: "#C0392B",
+    effort: 3,
+    tags: ["Food & Culture", "Brick & Mortar", "High Effort"],
+    need: "Fresno is home to a growing African community with very few authentic West African dining options. A restaurant would serve a niche market supported by a vibrant network of Africans and food lovers alike.",
+    vision: "Authentic West African cuisine at an affordable price — a gathering place for culture, community, and good food.",
+    passion: "\"I love food, I love cooking, and I love people gathering around a shared table.\"",
+    risk: "High startup cost, significant time commitment, competitive restaurant market, and the industry's historically high failure rate.",
+    reward: "A lifelong dream. A cultural institution in Fresno — where food becomes community.",
+  },
+  {
+    id: 2,
+    emoji: "💻",
+    title: "Code Switch Labs",
+    subtitle: "Youth Coding Nonprofit",
+    color: "#1A3A5C",
+    effort: 2,
+    tags: ["Nonprofit", "Education", "Social Impact"],
+    need: "Digital literacy is not equitable in the Central Valley, especially for children in lower-income neighborhoods. Most screen time is spent consuming content rather than creating it. There is an urgent need for accessible coding education in robotics, app development, game development, and AI.",
+    vision: "Accelerating digital fluency for every kid in the Valley — equity in digital literacy, one line of code at a time.",
+    passion: "\"I love technology and I love teaching kids, helping them build bright futures.\"",
+    risk: "Fragmented competition, reliance on STEM funding cycles, highly relational work, and a thin workforce of qualified instructors.",
+    reward: "The potential to scale beyond Fresno, fill genuine gaps in tech education, and eventually grow into adult programming. Deeply rewarding and mission-driven.",
+  },
+  {
+    id: 3,
+    emoji: "🤖",
+    title: "Moral Arc AI",
+    subtitle: "AI Bias & Fairness Consulting",
+    color: "#6C3483",
+    effort: 3,
+    tags: ["Consulting", "AI Ethics", "Nonprofit"],
+    need: "AI development is moving fast — and its inherent biases, drawn from flawed training data, threaten to amplify systemic inequities at scale. Without safeguards and advocates requiring responsible AI practices, the repercussions could be irreversible.",
+    vision: "Dignity in every algorithm — shaping the ethical standards that govern AI before the window to do so closes.",
+    passion: "\"Leveraging my background in functional safety engineering, this is a natural horizontal move into AI bias and fairness — a space I care about deeply.\"",
+    risk: "Requires significant expertise development, no initial customer base, a crowded and competitive space, potential travel demands, and possible conflicts with current employment.",
+    reward: "Low effort relative to high financial return. An opportunity to participate in 'digital justice' and help define responsible AI as the norm in the transformation of blue-collar work.",
+  },
+  {
+    id: 4,
+    emoji: "👶🏾",
+    title: "Mbong Clinical LLC",
+    subtitle: "Clinical Midwifery Services",
+    color: "#1E8449",
+    effort: 2,
+    tags: ["Healthcare", "Women's Health", "Social Justice"],
+    need: "Midwifery care is severely lacking in the Central Valley, especially for women of color whose birth outcomes significantly lag behind their white counterparts. Black and Brown pregnant women struggle to access equitable, compassionate care from clinicians who understand their daily realities.",
+    vision: "Improving maternal outcomes and providing compassionate, culturally informed care — one family at a time.",
+    passion: "\"It would be so meaningful to build something together that directly improves the health and dignity of mothers in our community.\"",
+    risk: "Significant time commitment, multifaceted coordination of clinical services, building a new patient base, and long reimbursement wait times from Medi-Cal.",
+    reward: "Maternal health is a crisis and a justice issue in the Valley. This moves the needle in the right direction — and it's something we could build together.",
+  },
+  {
+    id: 5,
+    emoji: "🏡",
+    title: "Midwife & Engineer",
+    subtitle: "Dual Consulting Brand",
+    color: "#C45C1A",
+    effort: 1,
+    tags: ["Brand", "Consulting", "Low Effort"],
+    need: "A unified brand for business consulting and midwifery care under one roof — where professional strategy meets compassionate health services. Come pregnant, leave with a healthy baby and a thriving business.",
+    vision: "Nesting by design — a brand that honors both the science of engineering and the art of new life.",
+    passion: "\"Teaching, podcasting, writing books, and building merch around a brand we both love.\"",
+    risk: "No significant brand traction beyond family and friends, limited identity clarity, a saturated personal brand market, and an unclear problem statement.",
+    reward: "Pure fun. There is a niche — but it hasn't been validated yet. A wait-and-see opportunity that could become something special.",
+  },
+  {
+    id: 6,
+    emoji: "⛪",
+    title: "ORECCD",
+    subtitle: "Church & Community Development Consultancy",
+    color: "#2471A3",
+    effort: 2,
+    tags: ["Nonprofit", "Community", "Church Strategy"],
+    need: "Synergies and strategic alignment between onRamps Economic Community Development Corporation and onRamps Community Church remain unrealized. A dedicated consultancy could unlock their combined potential to serve the neighborhood more effectively.",
+    vision: "Collaboration that meaningfully benefits both the community and the church — a model for faith-integrated economic development.",
+    passion: "\"Supporting the church's vision of serving its neighbors is something I care about deeply.\"",
+    risk: "Scope and structure are still being defined. Risks TBD pending further organizational exploration.",
+    reward: "A genuine challenge with rich institutional history and the potential for life-changing impact on the community it serves.",
+  },
+  {
+    id: 7,
+    emoji: "🐦",
+    title: "Pigeon Care LLC",
+    subtitle: "Eco-Friendly Urban Bird Habitat",
+    color: "#7F8C8D",
+    effort: 3,
+    tags: ["Product", "Urban Ecology", "Exit Strategy"],
+    need: "Fresno's pigeon population is a growing nuisance — damaging buildings, degrading backyards, and creating sanitary hazards. A lack of dedicated habitat drives birds into spaces where they aren't welcome.",
+    vision: "Eco-friendly and humane solutions to urban bird overpopulation — making cities cleaner without cruelty.",
+    passion: "\"I love birds. I don't love their poop.\"",
+    risk: "Designs are easy to copy without patent protection, prototyping is required, the city has initiated its own bird control programs, and there is no customer validation yet.",
+    reward: "A clear exit strategy: license the design and earn ongoing royalties without the ongoing operational burden. Elegant if it works.",
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let currentIndex = 0;
+let picks = new Set();
+let hintHidden = false;
+
+// ── PASSWORD ──────────────────────────────────────────────────────────────
+function checkPassword() {
+  const val = document.getElementById('pw-input').value.toLowerCase().trim();
+  if (val === 'mbong') {
+    showScreen('screen-intro');
+  } else {
+    const field = document.getElementById('pw-input');
+    const err = document.getElementById('pw-error');
+    field.classList.add('error');
+    err.textContent = 'Incorrect password. Try again.';
+    setTimeout(() => { field.classList.remove('error'); err.textContent = ''; }, 2000);
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+// ── SCREENS ───────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── BUILD CARDS ───────────────────────────────────────────────────────────
+function buildCards() {
+  const container = document.getElementById('card-container');
+  container.innerHTML = '';
+  ideas.forEach((idea, i) => {
+    const card = document.createElement('div');
+    card.className = `idea-card ${i === 0 ? 'current' : i === 1 ? 'next' : ''}`;
+    card.id = `card-${i}`;
+    const effortLabel = ['', 'Low', 'Medium', 'High'][idea.effort];
+    const dots = [1,2,3].map(d => `<div class="effort-dot ${d <= idea.effort ? 'filled' : ''}"></div>`).join('');
+    const tags = idea.tags.map(t => `<span class="card-tag" style="color:${idea.color}">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="card-hero" style="background:${idea.color}15">
+        <span class="card-emoji">${idea.emoji}</span>
+        <div class="card-number" style="color:${idea.color}">Idea ${idea.id} of ${ideas.length}</div>
+        <h2 class="card-title" style="color:${idea.color}">${idea.title}</h2>
+        <p class="card-subtitle" style="color:${idea.color}">${idea.subtitle}</p>
+      </div>
+      <div class="card-accent" style="background:${idea.color}"></div>
+      <div class="card-body">
+        <div class="card-section">
+          <div class="card-section-label">The Need</div>
+          <p class="card-section-text">${idea.need}</p>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label">The Vision</div>
+          <p class="card-section-text">${idea.vision}</p>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label">Amos's Passion</div>
+          <p class="card-section-text" style="font-style:italic">${idea.passion}</p>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label">The Risk</div>
+          <p class="card-section-text">${idea.risk}</p>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label">The Reward</div>
+          <p class="card-section-text">${idea.reward}</p>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label" style="margin-bottom:8px">Effort Level — ${effortLabel}</div>
+          <div class="effort-dots">${dots}</div>
+        </div>
+        <div class="card-section">
+          <div class="card-section-label" style="margin-bottom:8px">Tags</div>
+          <div class="card-tags">${tags}</div>
+        </div>
+      </div>
+    `;
+    // Swipe support
+    setupSwipe(card, i);
+    container.appendChild(card);
+  });
+}
+
+// ── SWIPE ─────────────────────────────────────────────────────────────────
+function setupSwipe(el, idx) {
+  let startX = 0, startY = 0, isDragging = false;
+  el.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = false;
+  }, { passive: true });
+  el.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) + 5) isDragging = true;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 60) {
+      if (dx < 0 && currentIndex < ideas.length - 1) navigate(1);
+      else if (dx > 0 && currentIndex > 0) navigate(-1);
+      if (!hintHidden) { document.getElementById('swipe-hint').style.opacity = '0'; hintHidden = true; }
+    }
+  });
+}
+
+// ── NAVIGATE ──────────────────────────────────────────────────────────────
+function navigate(dir) {
+  const cards = document.querySelectorAll('.idea-card');
+  cards[currentIndex].className = 'idea-card ' + (dir > 0 ? 'prev' : 'next');
+  currentIndex = Math.max(0, Math.min(ideas.length - 1, currentIndex + dir));
+  cards[currentIndex].className = 'idea-card current';
+  // Also reposition any others
+  cards.forEach((c, i) => {
+    if (i !== currentIndex) {
+      c.className = 'idea-card ' + (i < currentIndex ? 'prev' : 'next');
+    }
+  });
+  updateUI();
+  // If last card navigated
+  if (currentIndex === ideas.length - 1 && dir > 0) {
+    document.getElementById('btn-next').innerHTML = '✓';
+    document.getElementById('btn-next').onclick = goToReview;
+  } else {
+    document.getElementById('btn-next').innerHTML = '→';
+    document.getElementById('btn-next').onclick = () => navigate(1);
+  }
+}
+
+function goToReview() { buildReview(); showScreen('screen-review'); }
+
+// ── LIKE ──────────────────────────────────────────────────────────────────
+function toggleLike() {
+  const id = ideas[currentIndex].id;
+  if (picks.has(id)) {
+    picks.delete(id);
+  } else {
+    if (picks.size >= 2) return;
+    picks.add(id);
+    document.getElementById('btn-like').classList.add('heart-pop');
+    setTimeout(() => document.getElementById('btn-like').classList.remove('heart-pop'), 400);
+  }
+  updateUI();
+}
+
+// ── UPDATE UI ─────────────────────────────────────────────────────────────
+function updateUI() {
+  const idea = ideas[currentIndex];
+  const isPicked = picks.has(idea.id);
+  const isMaxed = picks.size >= 2 && !isPicked;
+  document.getElementById('nav-count').textContent = `${currentIndex + 1} / ${ideas.length}`;
+  document.getElementById('nav-picks').textContent = `${picks.size} of 2 picked`;
+  document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / ideas.length) * 100}%`;
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  const likeBtn = document.getElementById('btn-like');
+  const likeHeart = document.getElementById('like-heart');
+  const likeLabel = document.getElementById('like-label');
+  likeBtn.className = 'btn-like' + (isPicked ? ' selected' : isMaxed ? ' maxed' : '');
+  likeHeart.textContent = isPicked ? '♥' : '♡';
+  likeLabel.textContent = isPicked ? 'Picked ✓' : isMaxed ? 'Max 2 reached' : 'Pick This';
+}
+
+// ── REVIEW ────────────────────────────────────────────────────────────────
+function buildReview() {
+  const container = document.getElementById('review-picks');
+  container.innerHTML = '';
+  const picked = ideas.filter(i => picks.has(i.id));
+  if (picked.length === 0) {
+    container.innerHTML = '<div class="review-empty">You haven\'t picked anything yet — go back and select up to 2 ideas.</div>';
+    return;
+  }
+  picked.forEach(idea => {
+    container.innerHTML += `
+      <div class="review-card">
+        <span class="review-card-emoji">${idea.emoji}</span>
+        <div class="review-card-info">
+          <div class="review-card-title" style="color:${idea.color}">${idea.title}</div>
+          <div class="review-card-sub">${idea.subtitle}</div>
+        </div>
+      </div>`;
+  });
+  if (picked.length < 2) {
+    container.innerHTML += '<div class="review-empty">You only picked 1 — you can go back and add a second if you\'d like.</div>';
+  }
+}
+
+function goBack() { showScreen('screen-cards'); updateUI(); }
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────
+function submitVote() {
+  const picked = ideas.filter(i => picks.has(i.id));
+  const thanks = document.getElementById('thanks-picks');
+  thanks.innerHTML = picked.length === 0
+    ? '<p style="text-align:center;color:var(--muted);font-size:14px">No ideas selected.</p>'
+    : picked.map(i => `
+        <div class="thanks-pick">
+          <span class="thanks-pick-emoji">${i.emoji}</span>
+          <span class="thanks-pick-name" style="color:${i.color}">${i.title}</span>
+        </div>`).join('');
+  showScreen('screen-thanks');
+}
+
+// ── START ─────────────────────────────────────────────────────────────────
+function startCards() {
+  buildCards();
+  showScreen('screen-cards');
+  updateUI();
+}
+</script>
+</body>
+</html>
