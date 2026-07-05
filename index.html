@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Amos' MBA Ideas — Help Me Pick</title>
+<title>MBA Capstone Ideas  — Help Me Pick</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -29,7 +29,6 @@
     user-select: none;
   }
 
-  /* ── SCREENS ── */
   .screen {
     position: fixed; inset: 0;
     display: flex; flex-direction: column;
@@ -39,11 +38,8 @@
     transition: opacity 0.4s ease;
     z-index: 1;
   }
-  .screen.active {
-    opacity: 1; pointer-events: all;
-  }
+  .screen.active { opacity: 1; pointer-events: all; }
 
-  /* ── GRID BG ── */
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -54,11 +50,8 @@
     pointer-events: none; z-index: 0;
   }
 
-  /* ── PASSWORD SCREEN ── */
-  #screen-password {
-    background: var(--dark);
-    z-index: 10;
-  }
+  /* ── PASSWORD ── */
+  #screen-password { background: var(--dark); z-index: 10; }
   .pw-logo {
     font-family: 'Space Mono', monospace;
     font-size: 13px; font-weight: 700;
@@ -70,13 +63,11 @@
   .pw-title {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 28px; font-weight: 700;
-    text-align: center; margin-bottom: 8px;
-    line-height: 1.2;
+    text-align: center; margin-bottom: 8px; line-height: 1.2;
   }
   .pw-sub {
     font-size: 14px; color: var(--muted);
-    text-align: center; margin-bottom: 40px;
-    line-height: 1.6;
+    text-align: center; margin-bottom: 40px; line-height: 1.6;
   }
   .pw-field {
     width: 100%; max-width: 320px;
@@ -95,12 +86,13 @@
   .pw-error {
     font-size: 12px; color: #e05555;
     text-align: center; margin-bottom: 16px;
-    height: 16px; transition: opacity 0.2s;
+    height: 16px;
   }
   .btn-primary {
     background: var(--orange); color: var(--white);
     border: none; border-radius: 12px;
-    padding: 16px 40px; font-family: 'Barlow Condensed', sans-serif;
+    padding: 16px 40px;
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 16px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase;
     cursor: pointer; transition: all 0.2s;
@@ -108,17 +100,12 @@
   }
   .btn-primary:active { transform: scale(0.97); }
 
-  /* ── INTRO SCREEN ── */
-  #screen-intro {
-    text-align: center;
-    background: var(--dark);
-    padding: 32px 28px;
-  }
+  /* ── INTRO ── */
+  #screen-intro { text-align: center; background: var(--dark); padding: 32px 28px; }
   .intro-eyebrow {
     font-family: 'Space Mono', monospace;
     font-size: 10px; letter-spacing: 4px;
-    color: var(--orange); text-transform: uppercase;
-    margin-bottom: 20px;
+    color: var(--orange); text-transform: uppercase; margin-bottom: 20px;
   }
   .intro-title {
     font-family: 'Barlow Condensed', sans-serif;
@@ -130,8 +117,7 @@
   .intro-body {
     font-size: 15px; line-height: 1.7;
     color: rgba(255,255,255,0.65);
-    max-width: 360px; margin: 0 auto 28px;
-    font-weight: 300;
+    max-width: 360px; margin: 0 auto 28px; font-weight: 300;
   }
   .intro-rules {
     background: rgba(255,255,255,0.04);
@@ -148,25 +134,15 @@
   .intro-rule:last-child { margin-bottom: 0; }
   .intro-rule strong { color: var(--orange); }
 
-  /* ── CARD SCREEN ── */
-  #screen-cards {
-    padding: 0;
-    justify-content: flex-start;
-    background: var(--dark);
-  }
+  /* ── CARDS ── */
+  #screen-cards { padding: 0; justify-content: flex-start; background: var(--dark); }
 
-  /* Progress bar */
   .progress-bar {
     position: fixed; top: 0; left: 0; right: 0;
-    height: 3px; background: rgba(255,255,255,0.08);
-    z-index: 20;
+    height: 3px; background: rgba(255,255,255,0.08); z-index: 20;
   }
-  .progress-fill {
-    height: 100%; background: var(--orange);
-    transition: width 0.4s ease;
-  }
+  .progress-fill { height: 100%; background: var(--orange); transition: width 0.4s ease; }
 
-  /* Top nav */
   .card-nav {
     position: fixed; top: 3px; left: 0; right: 0;
     height: 52px; display: flex;
@@ -176,111 +152,61 @@
     backdrop-filter: blur(12px);
     z-index: 19; border-bottom: 1px solid var(--border);
   }
-  .nav-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--muted); letter-spacing: 2px;
-  }
-  .nav-picks {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--orange); letter-spacing: 1px;
-  }
-  .nav-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 700; color: var(--white);
-    letter-spacing: 1px;
-  }
+  .nav-count { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; }
+  .nav-picks { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 1px; }
+  .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); letter-spacing: 1px; }
 
-  /* Card container */
-  .card-container {
-    position: fixed; inset: 55px 0 80px;
-    overflow: hidden;
-  }
+  .card-container { position: fixed; inset: 55px 0 80px; overflow: hidden; }
 
-  /* Individual card */
   .idea-card {
     position: absolute; inset: 12px 16px;
     background: var(--white);
     border-radius: 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-y: auto; overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     transform: translateX(100%);
     transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
     display: flex; flex-direction: column;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
   }
-  .idea-card.current  { transform: translateX(0); }
-  .idea-card.prev     { transform: translateX(-110%); }
-  .idea-card.next     { transform: translateX(110%); }
+  .idea-card.current { transform: translateX(0); }
+  .idea-card.prev    { transform: translateX(-110%); }
+  .idea-card.next    { transform: translateX(110%); }
 
-  /* Card hero */
-  .card-hero {
-    padding: 28px 24px 20px;
-    position: relative; flex-shrink: 0;
-  }
-  .card-emoji {
-    font-size: 40px; margin-bottom: 14px;
-    display: block; line-height: 1;
-  }
+  .card-hero { padding: 28px 24px 20px; position: relative; flex-shrink: 0; }
+  .card-emoji { font-size: 40px; margin-bottom: 14px; display: block; line-height: 1; }
   .card-number {
     font-family: 'Space Mono', monospace;
     font-size: 10px; letter-spacing: 3px;
-    text-transform: uppercase; margin-bottom: 8px;
-    opacity: 0.55;
+    text-transform: uppercase; margin-bottom: 8px; opacity: 0.55;
   }
   .card-title {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 32px; font-weight: 900;
-    line-height: 1.05; letter-spacing: -0.3px;
-    margin-bottom: 4px;
+    line-height: 1.05; letter-spacing: -0.3px; margin-bottom: 4px;
   }
-  .card-subtitle {
-    font-size: 13px; opacity: 0.55;
-    font-weight: 500; text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  /* Accent bar */
-  .card-accent {
-    height: 4px; width: 100%; flex-shrink: 0;
-  }
-
-  /* Card body */
-  .card-body {
-    padding: 20px 24px 100px;
-    flex: 1;
-  }
+  .card-subtitle { font-size: 13px; opacity: 0.55; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+  .card-accent { height: 4px; width: 100%; flex-shrink: 0; }
+  .card-body { padding: 20px 24px 100px; flex: 1; }
   .card-section { margin-bottom: 20px; }
   .card-section-label {
     font-family: 'Space Mono', monospace;
     font-size: 9px; letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted); margin-bottom: 6px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
   }
-  .card-section-text {
-    font-size: 14px; line-height: 1.65;
-    color: #1a1a2a; font-weight: 400;
-  }
-  .card-section-text strong { color: var(--navy); }
+  .card-section-text { font-size: 14px; line-height: 1.65; color: #1a1a2a; font-weight: 400; }
 
-  /* Effort dots */
   .effort-dots { display: flex; gap: 6px; margin-top: 4px; }
-  .effort-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #ddd;
-  }
+  .effort-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; }
   .effort-dot.filled { background: var(--navy); }
 
-  /* Tags */
   .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
   .card-tag {
     font-family: 'Space Mono', monospace;
     font-size: 10px; padding: 4px 10px;
-    border-radius: 20px; border: 1px solid currentColor;
-    letter-spacing: 0.5px;
+    border-radius: 20px; border: 1px solid currentColor; letter-spacing: 0.5px;
   }
 
-  /* Bottom actions */
   .card-actions {
     position: fixed; bottom: 0; left: 0; right: 0;
     height: 80px; padding: 12px 20px;
@@ -288,8 +214,7 @@
     backdrop-filter: blur(16px);
     border-top: 1px solid var(--border);
     display: flex; align-items: center;
-    justify-content: space-between; gap: 12px;
-    z-index: 20;
+    justify-content: space-between; gap: 12px; z-index: 20;
   }
   .btn-nav {
     width: 48px; height: 48px;
@@ -311,39 +236,32 @@
     font-size: 16px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase;
     cursor: pointer; transition: all 0.25s;
-    display: flex; align-items: center; justify-content: center;
-    gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .btn-like.selected {
-    background: var(--orange); color: var(--white);
-  }
-  .btn-like.maxed {
-    border-color: rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.3); cursor: not-allowed;
-  }
+  .btn-like.selected { background: var(--orange); color: var(--white); }
+  .btn-like.maxed { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); cursor: not-allowed; }
   .btn-like:active:not(.maxed) { transform: scale(0.97); }
 
-  /* ── REVIEW SCREEN ── */
+  .swipe-hint {
+    position: fixed; bottom: 92px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.25);
+    letter-spacing: 2px; text-align: center;
+    z-index: 18; pointer-events: none; white-space: nowrap;
+  }
+
+  /* ── REVIEW ── */
   #screen-review {
-    background: var(--dark);
-    padding: 24px 20px;
+    background: var(--dark); padding: 24px 20px;
     justify-content: flex-start;
-    overflow-y: auto;
-    align-items: stretch;
+    overflow-y: auto; align-items: stretch;
   }
-  .review-header {
-    text-align: center; padding: 20px 0 28px;
-  }
-  .review-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 36px; font-weight: 900;
-    margin-bottom: 8px;
-  }
+  .review-header { text-align: center; padding: 20px 0 24px; }
+  .review-title { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; margin-bottom: 8px; }
   .review-title em { color: var(--orange); font-style: normal; }
-  .review-sub {
-    font-size: 14px; color: var(--muted); line-height: 1.6;
-  }
-  .review-picks { margin-bottom: 24px; }
+  .review-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .review-picks { margin-bottom: 20px; }
   .review-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
@@ -352,12 +270,7 @@
     align-items: flex-start; gap: 16px;
   }
   .review-card-emoji { font-size: 28px; flex-shrink: 0; }
-  .review-card-info { flex: 1; }
-  .review-card-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px; font-weight: 700;
-    margin-bottom: 2px;
-  }
+  .review-card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 2px; }
   .review-card-sub { font-size: 12px; color: var(--muted); }
   .review-empty {
     background: rgba(255,255,255,0.02);
@@ -366,107 +279,99 @@
     text-align: center; color: var(--muted);
     font-size: 13px; margin-bottom: 12px;
   }
-  .comment-label {
+
+  /* Input shared style */
+  .field-label {
     font-family: 'Space Mono', monospace;
     font-size: 10px; letter-spacing: 3px;
-    color: var(--orange); text-transform: uppercase;
-    margin-bottom: 10px;
+    color: var(--orange); text-transform: uppercase; margin-bottom: 10px;
   }
-  .comment-box {
-    width: 100%; background: rgba(255,255,255,0.05);
+  .text-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
     border: 1.5px solid rgba(255,255,255,0.12);
     border-radius: 12px; padding: 14px 16px;
     font-family: 'Barlow', sans-serif;
     font-size: 14px; color: var(--white);
-    resize: none; outline: none; min-height: 100px;
-    line-height: 1.6; margin-bottom: 20px;
+    outline: none; margin-bottom: 16px;
     transition: border-color 0.2s;
+    -webkit-appearance: none;
   }
-  .comment-box:focus { border-color: var(--orange); }
-  .comment-box::placeholder { color: rgba(255,255,255,0.25); }
+  .text-input:focus { border-color: var(--orange); }
+  .text-input::placeholder { color: rgba(255,255,255,0.25); }
+  textarea.text-input { resize: none; min-height: 90px; line-height: 1.6; }
+
   .review-back {
     background: transparent; border: 1px solid var(--border);
     color: var(--muted); border-radius: 12px;
-    padding: 14px; font-family: 'Barlow Condensed', sans-serif;
+    padding: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 15px; font-weight: 600; letter-spacing: 1px;
-    cursor: pointer; width: 100%; margin-bottom: 10px;
+    cursor: pointer; width: 100%; margin-bottom: 32px;
     transition: all 0.2s;
   }
   .review-back:active { background: rgba(255,255,255,0.05); }
 
-  /* ── THANK YOU SCREEN ── */
-  #screen-thanks {
-    text-align: center;
-    background: var(--dark);
-  }
+  /* ── THANKS ── */
+  #screen-thanks { text-align: center; background: var(--dark); }
   .thanks-icon { font-size: 56px; margin-bottom: 20px; }
-  .thanks-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 42px; font-weight: 900;
-    margin-bottom: 12px; line-height: 1;
-  }
+  .thanks-title { font-family: 'Barlow Condensed', sans-serif; font-size: 42px; font-weight: 900; margin-bottom: 12px; line-height: 1; }
   .thanks-title em { color: var(--orange); font-style: normal; }
-  .thanks-body {
-    font-size: 15px; color: var(--muted);
-    line-height: 1.7; max-width: 320px;
-    margin: 0 auto 32px; font-weight: 300;
-  }
+  .thanks-body { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 320px; margin: 0 auto 32px; font-weight: 300; }
   .thanks-picks {
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
     border-radius: 14px; padding: 20px;
-    max-width: 340px; width: 100%;
-    margin: 0 auto 28px; text-align: left;
+    max-width: 340px; width: 100%; margin: 0 auto 28px; text-align: left;
   }
   .thanks-pick {
     display: flex; align-items: center; gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 8px 0; border-bottom: 1px solid var(--border);
   }
   .thanks-pick:last-child { border-bottom: none; }
   .thanks-pick-emoji { font-size: 22px; }
-  .thanks-pick-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px; font-weight: 700;
-  }
-  .thanks-tagline {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--orange);
-    letter-spacing: 2px; text-align: center;
-  }
+  .thanks-pick-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; }
+  .thanks-tagline { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 2px; }
 
-  /* Animations */
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
+  /* Sending overlay */
+  #sending-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(13,27,42,0.92);
+    align-items: center; justify-content: center;
+    z-index: 50; flex-direction: column; gap: 16px;
   }
-  @keyframes heartPop {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(1.4); }
-    100% { transform: scale(1); }
+  #sending-overlay.active { display: flex; }
+  .sending-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 3px;
+    color: var(--orange); text-transform: uppercase;
   }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  @keyframes heartPop { 0%{transform:scale(1)} 40%{transform:scale(1.4)} 100%{transform:scale(1)} }
   .heart-pop { animation: heartPop 0.35s cubic-bezier(.36,.07,.19,.97); }
-
-  /* Swipe hint */
-  .swipe-hint {
-    position: fixed; bottom: 92px; left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px; color: rgba(255,255,255,0.25);
-    letter-spacing: 2px; text-align: center;
-    z-index: 18; pointer-events: none;
-    white-space: nowrap;
-  }
 </style>
 </head>
 <body>
 
+<!-- SENDING OVERLAY -->
+<div id="sending-overlay">
+  <div class="spinner"></div>
+  <div class="sending-text">Sending your vote…</div>
+</div>
+
 <!-- PASSWORD -->
 <div id="screen-password" class="screen active">
-  <div class="pw-logo">[ </> <span>Amos Ndip</span> ]</div>
+  <div class="pw-logo">[ </> <span>Amos Projects</span> ]</div>
   <h1 class="pw-title">Private Access Only</h1>
-  <p class="pw-sub">Amos shared this link with you personally.<br>Enter the password to continue.</p>
+  <p class="pw-sub">For your eyes only! <br>Enter the password to continue.</p>
   <input id="pw-input" class="pw-field" type="password" placeholder="••••••" maxlength="12" autocomplete="off">
   <div id="pw-error" class="pw-error"></div>
   <button class="btn-primary" onclick="checkPassword()">Enter</button>
@@ -477,15 +382,15 @@
   <p class="intro-eyebrow">MBA Capstone · Idea Selection</p>
   <h1 class="intro-title">I need your<br><em>honest take.</em></h1>
   <p class="intro-body">
-    As you know, I've been working on my MBA at Eastern University. I'm finally at the finish line and could use your help narrowing down a capstone project. A full business plan or white paper on one of the following ideas.
+    As you know, I'm wrapping up my MBA at Eastern University. I have seven ideas for a capstone project (business plan or whitepaper) I could use your help to narrow down these options. thanks for your time.
   </p>
   <div class="intro-rules">
     <p class="intro-rule">📖 You'll review <strong>7 ideas</strong>, one at a time</p>
     <p class="intro-rule">❤️ Pick your <strong>top 2 favorites</strong></p>
     <p class="intro-rule">💬 Leave a <strong>quick comment</strong> at the end</p>
-    <p class="intro-rule">🎯 Most important: be <strong>honest</strong>, not kind</p>
+    <p class="intro-rule">✍️ Drop your <strong>name</strong> so I can follow up if needed</p>
   </div>
-  <button class="btn-primary" onclick="startCards()">Let's Go →</button>
+  <button class="btn-primary" onclick="startCards()">¡Vámonos! →</button>
 </div>
 
 <!-- CARDS -->
@@ -512,11 +417,21 @@
 <div id="screen-review" class="screen">
   <div class="review-header">
     <h2 class="review-title">Your <em>top picks</em></h2>
-    <p class="review-sub">Review your selections and leave Amos a note before submitting.</p>
+    <p class="review-sub">Almost done — drop your name and any thoughts before submitting.</p>
   </div>
   <div class="review-picks" id="review-picks"></div>
-  <div class="comment-label">Your honest feedback</div>
-  <textarea class="comment-box" id="comment-box" placeholder="Why those two? What excites you most? What concerns you? Be real…"></textarea>
+
+  <div class="field-label">Your Name</div>
+  <input
+    type="text" id="name-input"
+    class="text-input"
+    placeholder="First name is fine"
+    autocomplete="name"
+  >
+
+  <div class="field-label">Anything else on your mind?</div>
+  <textarea class="text-input" id="comment-box" placeholder="Why those two? What excites you most? Any questions?"></textarea>
+
   <button class="btn-primary" onclick="submitVote()" style="margin-bottom:12px;">Submit My Vote ✓</button>
   <button class="review-back" onclick="goBack()">← Go back and change selections</button>
 </div>
@@ -525,91 +440,74 @@
 <div id="screen-thanks" class="screen">
   <div class="thanks-icon">🙏🏾</div>
   <h2 class="thanks-title">You're the <em>best.</em></h2>
-  <p class="thanks-body">Your picks and feedback have been noted. Amos will reach out — probably over a good meal or a cup of something warm.</p>
+  <p class="thanks-body">Your vote is in. I'll reach out soon — probably over food or coffee.</p>
   <div class="thanks-picks" id="thanks-picks"></div>
   <p class="thanks-tagline">— Amos Ndip, MBA Candidate</p>
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
+const FORMSPREE = 'https://formspree.io/f/xgojdeaj';
+
 const ideas = [
   {
-    id: 1,
-    emoji: "🍖",
-    title: "Suya Kitchen",
-    subtitle: "West African Restaurant",
-    color: "#C0392B",
-    effort: 3,
+    id: 1, emoji: "🍖",
+    title: "Suya Kitchen", subtitle: "West African Restaurant",
+    color: "#C0392B", effort: 3,
     tags: ["Food & Culture", "Brick & Mortar", "High Effort"],
-    need: "Fresno is home to a growing African community with very few authentic West African dining options. A restaurant would serve a niche market supported by a vibrant network of Africans and food lovers alike.",
+    need: "Fresno is home to a growing African community with very few authentic West African dining options. A restaurant would serve this niche market, supported by a vibrant network of Africans and food lovers alike.",
     vision: "Authentic West African cuisine at an affordable price — a gathering place for culture, community, and good food.",
     passion: "\"I love food, I love cooking, and I love people gathering around a shared table.\"",
-    risk: "High startup cost, significant time commitment, competitive restaurant market, and the industry's historically high failure rate.",
-    reward: "A lifelong dream. A cultural institution in Fresno — where food becomes community.",
+    risk: "High startup cost, significant time commitment, a competitive restaurant market, and the industry's historically high failure rate.",
+    reward: "A lifelong dream. A cultural institution in Fresno where food becomes community.",
   },
   {
-    id: 2,
-    emoji: "💻",
-    title: "Code Switch Labs",
-    subtitle: "Youth Coding Nonprofit",
-    color: "#1A3A5C",
-    effort: 2,
+    id: 2, emoji: "💻",
+    title: "Code Switch Labs", subtitle: "Youth Coding Nonprofit",
+    color: "#1A3A5C", effort: 2,
     tags: ["Nonprofit", "Education", "Social Impact"],
     need: "Digital literacy is not equitable in the Central Valley, especially for children in lower-income neighborhoods. Most screen time is spent consuming content rather than creating it. There is an urgent need for accessible coding education in robotics, app development, game development, and AI.",
     vision: "Accelerating digital fluency for every kid in the Valley — equity in digital literacy, one line of code at a time.",
-    passion: "\"I love technology and I love teaching kids, helping them build bright futures.\"",
+    passion: "\"I love technology and I love teaching kids — helping them build bright futures.\"",
     risk: "Fragmented competition, reliance on STEM funding cycles, highly relational work, and a thin workforce of qualified instructors.",
     reward: "The potential to scale beyond Fresno, fill genuine gaps in tech education, and eventually grow into adult programming. Deeply rewarding and mission-driven.",
   },
   {
-    id: 3,
-    emoji: "🤖",
-    title: "Moral Arc AI",
-    subtitle: "AI Bias & Fairness Consulting",
-    color: "#6C3483",
-    effort: 3,
+    id: 3, emoji: "🤖",
+    title: "Moral Arc AI", subtitle: "AI Bias & Fairness Consulting",
+    color: "#6C3483", effort: 3,
     tags: ["Consulting", "AI Ethics", "Nonprofit"],
     need: "AI development is moving fast — and its inherent biases, drawn from flawed training data, threaten to amplify systemic inequities at scale. Without safeguards and advocates requiring responsible AI practices, the repercussions could be irreversible.",
     vision: "Dignity in every algorithm — shaping the ethical standards that govern AI before the window to do so closes.",
-    passion: "\"Leveraging my background in functional safety engineering, this is a natural horizontal move into AI bias and fairness — a space I care about deeply.\"",
+    passion: "\"Leveraging my background in functional safety engineering, this is a natural move into AI bias and fairness — a space I care about deeply.\"",
     risk: "Requires significant expertise development, no initial customer base, a crowded and competitive space, potential travel demands, and possible conflicts with current employment.",
-    reward: "Low effort relative to high financial return. An opportunity to participate in 'digital justice' and help define responsible AI as the norm in the transformation of blue-collar work.",
+    reward: "Low effort relative to high financial return. An opportunity to participate in digital justice and help define responsible AI as the norm in the transformation of work.",
   },
   {
-    id: 4,
-    emoji: "👶🏾",
-    title: "Mbong Clinical LLC",
-    subtitle: "Clinical Midwifery Services",
-    color: "#1E8449",
-    effort: 2,
+    id: 4, emoji: "👶🏾",
+    title: "Mbong Clinical LLC", subtitle: "Clinical Midwifery Services",
+    color: "#1E8449", effort: 2,
     tags: ["Healthcare", "Women's Health", "Social Justice"],
-    need: "Midwifery care is severely lacking in the Central Valley, especially for women of color whose birth outcomes significantly lag behind their white counterparts. Black and Brown pregnant women struggle to access equitable, compassionate care from clinicians who understand their daily realities.",
+    need: "Midwifery care is severely lacking in the Central Valley, especially for women of color whose birth outcomes significantly lag behind those of white women. Black and Brown pregnant women struggle to access equitable, compassionate care from clinicians who understand their daily realities.",
     vision: "Improving maternal outcomes and providing compassionate, culturally informed care — one family at a time.",
     passion: "\"It would be so meaningful to build something together that directly improves the health and dignity of mothers in our community.\"",
     risk: "Significant time commitment, multifaceted coordination of clinical services, building a new patient base, and long reimbursement wait times from Medi-Cal.",
-    reward: "Maternal health is a crisis and a justice issue in the Valley. This moves the needle in the right direction — and it's something we could build together.",
+    reward: "Maternal health is a crisis and a justice issue in the Valley. This moves the needle — and it is something we could build together.",
   },
   {
-    id: 5,
-    emoji: "🏡",
-    title: "Midwife & Engineer",
-    subtitle: "Dual Consulting Brand",
-    color: "#C45C1A",
-    effort: 1,
+    id: 5, emoji: "🏡",
+    title: "Midwife & Engineer", subtitle: "Dual Consulting Brand",
+    color: "#C45C1A", effort: 1,
     tags: ["Brand", "Consulting", "Low Effort"],
-    need: "A unified brand for business consulting and midwifery care under one roof — where professional strategy meets compassionate health services. Come pregnant, leave with a healthy baby and a thriving business.",
-    vision: "Nesting by design — a brand that honors both the science of engineering and the art of new life.",
+    need: "A unified brand for business consulting and midwifery care under one roof — where professional strategy meets compassionate health services.",
+    vision: "Nesting by design — a brand that honors both the science of engineering and the art of bringing new life into the world.",
     passion: "\"Teaching, podcasting, writing books, and building merch around a brand we both love.\"",
     risk: "No significant brand traction beyond family and friends, limited identity clarity, a saturated personal brand market, and an unclear problem statement.",
-    reward: "Pure fun. There is a niche — but it hasn't been validated yet. A wait-and-see opportunity that could become something special.",
+    reward: "Pure fun. There is a niche — but it has not been validated yet. A wait-and-see opportunity that could become something special.",
   },
   {
-    id: 6,
-    emoji: "⛪",
-    title: "ORECCD",
-    subtitle: "Church & Community Development Consultancy",
-    color: "#2471A3",
-    effort: 2,
+    id: 6, emoji: "⛪",
+    title: "ORECCD", subtitle: "Church & Community Development Consultancy",
+    color: "#2471A3", effort: 2,
     tags: ["Nonprofit", "Community", "Church Strategy"],
     need: "Synergies and strategic alignment between onRamps Economic Community Development Corporation and onRamps Community Church remain unrealized. A dedicated consultancy could unlock their combined potential to serve the neighborhood more effectively.",
     vision: "Collaboration that meaningfully benefits both the community and the church — a model for faith-integrated economic development.",
@@ -618,14 +516,11 @@ const ideas = [
     reward: "A genuine challenge with rich institutional history and the potential for life-changing impact on the community it serves.",
   },
   {
-    id: 7,
-    emoji: "🐦",
-    title: "Pigeon Care LLC",
-    subtitle: "Eco-Friendly Urban Bird Habitat",
-    color: "#7F8C8D",
-    effort: 3,
+    id: 7, emoji: "🐦",
+    title: "Pigeon Care LLC", subtitle: "Eco-Friendly Urban Bird Habitat",
+    color: "#7F8C8D", effort: 3,
     tags: ["Product", "Urban Ecology", "Exit Strategy"],
-    need: "Fresno's pigeon population is a growing nuisance — damaging buildings, degrading backyards, and creating sanitary hazards. A lack of dedicated habitat drives birds into spaces where they aren't welcome.",
+    need: "Fresno's pigeon population is a growing nuisance — damaging buildings, degrading backyards, and creating sanitary hazards. A lack of dedicated habitat drives birds into spaces where they are not welcome.",
     vision: "Eco-friendly and humane solutions to urban bird overpopulation — making cities cleaner without cruelty.",
     passion: "\"I love birds. I don't love their poop.\"",
     risk: "Designs are easy to copy without patent protection, prototyping is required, the city has initiated its own bird control programs, and there is no customer validation yet.",
@@ -633,7 +528,6 @@ const ideas = [
   },
 ];
 
-// ── STATE ─────────────────────────────────────────────────────────────────
 let currentIndex = 0;
 let picks = new Set();
 let hintHidden = false;
@@ -651,9 +545,7 @@ function checkPassword() {
     setTimeout(() => { field.classList.remove('error'); err.textContent = ''; }, 2000);
   }
 }
-document.getElementById('pw-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkPassword();
-});
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
 
 // ── SCREENS ───────────────────────────────────────────────────────────────
 function showScreen(id) {
@@ -667,13 +559,13 @@ function buildCards() {
   container.innerHTML = '';
   ideas.forEach((idea, i) => {
     const card = document.createElement('div');
-    card.className = `idea-card ${i === 0 ? 'current' : i === 1 ? 'next' : ''}`;
+    card.className = `idea-card ${i === 0 ? 'current' : 'next'}`;
     card.id = `card-${i}`;
     const effortLabel = ['', 'Low', 'Medium', 'High'][idea.effort];
     const dots = [1,2,3].map(d => `<div class="effort-dot ${d <= idea.effort ? 'filled' : ''}"></div>`).join('');
     const tags = idea.tags.map(t => `<span class="card-tag" style="color:${idea.color}">${t}</span>`).join('');
     card.innerHTML = `
-      <div class="card-hero" style="background:${idea.color}15">
+      <div class="card-hero" style="background:${idea.color}18">
         <span class="card-emoji">${idea.emoji}</span>
         <div class="card-number" style="color:${idea.color}">Idea ${idea.id} of ${ideas.length}</div>
         <h2 class="card-title" style="color:${idea.color}">${idea.title}</h2>
@@ -690,7 +582,7 @@ function buildCards() {
           <p class="card-section-text">${idea.vision}</p>
         </div>
         <div class="card-section">
-          <div class="card-section-label">Amos's Passion</div>
+          <div class="card-section-label">My Passion</div>
           <p class="card-section-text" style="font-style:italic">${idea.passion}</p>
         </div>
         <div class="card-section">
@@ -709,21 +601,17 @@ function buildCards() {
           <div class="card-section-label" style="margin-bottom:8px">Tags</div>
           <div class="card-tags">${tags}</div>
         </div>
-      </div>
-    `;
-    // Swipe support
-    setupSwipe(card, i);
+      </div>`;
+    setupSwipe(card);
     container.appendChild(card);
   });
 }
 
 // ── SWIPE ─────────────────────────────────────────────────────────────────
-function setupSwipe(el, idx) {
+function setupSwipe(el) {
   let startX = 0, startY = 0, isDragging = false;
   el.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = false;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY; isDragging = false;
   }, { passive: true });
   el.addEventListener('touchmove', e => {
     const dx = e.touches[0].clientX - startX;
@@ -747,24 +635,19 @@ function navigate(dir) {
   cards[currentIndex].className = 'idea-card ' + (dir > 0 ? 'prev' : 'next');
   currentIndex = Math.max(0, Math.min(ideas.length - 1, currentIndex + dir));
   cards[currentIndex].className = 'idea-card current';
-  // Also reposition any others
   cards.forEach((c, i) => {
-    if (i !== currentIndex) {
-      c.className = 'idea-card ' + (i < currentIndex ? 'prev' : 'next');
-    }
+    if (i !== currentIndex) c.className = 'idea-card ' + (i < currentIndex ? 'prev' : 'next');
   });
   updateUI();
-  // If last card navigated
-  if (currentIndex === ideas.length - 1 && dir > 0) {
-    document.getElementById('btn-next').innerHTML = '✓';
-    document.getElementById('btn-next').onclick = goToReview;
+  const btnNext = document.getElementById('btn-next');
+  if (currentIndex === ideas.length - 1) {
+    btnNext.innerHTML = '✓';
+    btnNext.onclick = () => { buildReview(); showScreen('screen-review'); };
   } else {
-    document.getElementById('btn-next').innerHTML = '→';
-    document.getElementById('btn-next').onclick = () => navigate(1);
+    btnNext.innerHTML = '→';
+    btnNext.onclick = () => navigate(1);
   }
 }
-
-function goToReview() { buildReview(); showScreen('screen-review'); }
 
 // ── LIKE ──────────────────────────────────────────────────────────────────
 function toggleLike() {
@@ -790,11 +673,9 @@ function updateUI() {
   document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / ideas.length) * 100}%`;
   document.getElementById('btn-prev').disabled = currentIndex === 0;
   const likeBtn = document.getElementById('btn-like');
-  const likeHeart = document.getElementById('like-heart');
-  const likeLabel = document.getElementById('like-label');
   likeBtn.className = 'btn-like' + (isPicked ? ' selected' : isMaxed ? ' maxed' : '');
-  likeHeart.textContent = isPicked ? '♥' : '♡';
-  likeLabel.textContent = isPicked ? 'Picked ✓' : isMaxed ? 'Max 2 reached' : 'Pick This';
+  document.getElementById('like-heart').textContent = isPicked ? '♥' : '♡';
+  document.getElementById('like-label').textContent = isPicked ? 'Picked ✓' : isMaxed ? 'Max 2 reached' : 'Pick This';
 }
 
 // ── REVIEW ────────────────────────────────────────────────────────────────
@@ -810,7 +691,7 @@ function buildReview() {
     container.innerHTML += `
       <div class="review-card">
         <span class="review-card-emoji">${idea.emoji}</span>
-        <div class="review-card-info">
+        <div>
           <div class="review-card-title" style="color:${idea.color}">${idea.title}</div>
           <div class="review-card-sub">${idea.subtitle}</div>
         </div>
@@ -823,26 +704,52 @@ function buildReview() {
 
 function goBack() { showScreen('screen-cards'); updateUI(); }
 
-// ── SUBMIT ────────────────────────────────────────────────────────────────
-function submitVote() {
+// ── SUBMIT → FORMSPREE ────────────────────────────────────────────────────
+async function submitVote() {
   const picked = ideas.filter(i => picks.has(i.id));
+  const name = document.getElementById('name-input').value.trim() || 'Anonymous';
+  const comment = document.getElementById('comment-box').value.trim();
+
+  const payload = {
+    name,
+    pick_1: picked[0] ? `${picked[0].emoji} ${picked[0].title}` : 'None',
+    pick_2: picked[1] ? `${picked[1].emoji} ${picked[1].title}` : 'None',
+    comment: comment || 'No comment left.',
+    submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
+  };
+
+  document.getElementById('sending-overlay').classList.add('active');
+
+  try {
+    await fetch(FORMSPREE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (e) {
+    console.error('Formspree error:', e);
+  }
+
+  document.getElementById('sending-overlay').classList.remove('active');
+
+  // Build thanks
   const thanks = document.getElementById('thanks-picks');
-  thanks.innerHTML = picked.length === 0
-    ? '<p style="text-align:center;color:var(--muted);font-size:14px">No ideas selected.</p>'
-    : picked.map(i => `
-        <div class="thanks-pick">
-          <span class="thanks-pick-emoji">${i.emoji}</span>
-          <span class="thanks-pick-name" style="color:${i.color}">${i.title}</span>
-        </div>`).join('');
+  thanks.innerHTML = `
+    <div class="thanks-pick">
+      <span class="thanks-pick-emoji">👤</span>
+      <span class="thanks-pick-name" style="color:var(--muted);font-size:14px">${name}</span>
+    </div>
+    ${picked.map(i => `
+    <div class="thanks-pick">
+      <span class="thanks-pick-emoji">${i.emoji}</span>
+      <span class="thanks-pick-name" style="color:${i.color}">${i.title}</span>
+    </div>`).join('')}`;
+
   showScreen('screen-thanks');
 }
 
 // ── START ─────────────────────────────────────────────────────────────────
-function startCards() {
-  buildCards();
-  showScreen('screen-cards');
-  updateUI();
-}
+function startCards() { buildCards(); showScreen('screen-cards'); updateUI(); }
 </script>
 </body>
 </html>
